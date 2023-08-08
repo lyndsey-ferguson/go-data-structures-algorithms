@@ -35,3 +35,23 @@ func RemoveAfter(node *Node) {
 		node.next = node.next.next
 	}
 }
+
+func SearchNodeIteratively(list *Node, data int) *Node {
+	for cursor := list; cursor != nil; {
+		if cursor.data == data {
+			return cursor
+		}
+		cursor = cursor.next
+	}
+	return nil
+}
+
+func SearchNodeRecursively(list *Node, data int) *Node {
+	if list == nil {
+		return nil
+	}
+	if list.data == data {
+		return list
+	}
+	return SearchNodeRecursively(list.next, data)
+}
