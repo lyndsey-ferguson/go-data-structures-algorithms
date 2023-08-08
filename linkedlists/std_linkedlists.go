@@ -22,3 +22,16 @@ func AppendNode(list *Node, node *Node) *Node {
 	cursor.next = node
 	return list
 }
+
+func InsertAfter(nodeBefore *Node, nodeAfter *Node) {
+	if nodeBefore != nil {
+		nodeAfter.next = nodeBefore.next
+		nodeBefore.next = nodeAfter
+	}
+}
+
+func RemoveAfter(node *Node) {
+	if node != nil && node.next != nil {
+		node.next = node.next.next
+	}
+}
