@@ -93,14 +93,44 @@ func TestRemoveAfter(t *testing.T) {
 
 	RemoveAfter(list)
 	if list.data != 1 {
-		t.Errorf("list.data = %x; want %x", list.data, 1)
+		t.Errorf("list.data = %d; want %d", list.data, 1)
 	}
 	if list.next.data != 3 {
-		t.Errorf("list.next.data = %x; want %x", list.next.data, 3)
+		t.Errorf("list.next.data = %d; want %d", list.next.data, 3)
 	}
 }
 
-// taken from https://medium.com/techie-delight/linked-list-interview-questions-and-practice-problems-55f75302d613
-func TestInsertionAtTail(t *testing.T) {
+// taken from
+func TestSearchNodeIteratively(t *testing.T) {
+	list := CreateNode(1)
+	node2 := CreateNode(2)
+	node3 := CreateNode(3)
+	list = AppendNode(list, node2)
+	list = AppendNode(list, node3)
 
+	foundNode := SearchNodeIteratively(list, 2)
+	if foundNode.data != 2 {
+		t.Errorf("foundNode.data = %d; want %d", foundNode.data, 2)
+	}
+	foundNode = SearchNodeIteratively(list, 12)
+	if foundNode != nil {
+		t.Errorf("foundNode is %x; want nil", &foundNode)
+	}
+}
+
+func TestSearchNodeRecursively(t *testing.T) {
+	list := CreateNode(1)
+	node2 := CreateNode(2)
+	node3 := CreateNode(3)
+	list = AppendNode(list, node2)
+	list = AppendNode(list, node3)
+
+	foundNode := SearchNodeRecursively(list, 2)
+	if foundNode.data != 2 {
+		t.Errorf("foundNode.data = %d; want %d", foundNode.data, 2)
+	}
+	foundNode = SearchNodeRecursively(list, 12)
+	if foundNode != nil {
+		t.Errorf("foundNode is %x; want nil", &foundNode)
+	}
 }
