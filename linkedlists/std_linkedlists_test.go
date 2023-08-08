@@ -19,10 +19,10 @@ func TestAppendNodeToList(t *testing.T) {
 		t.Errorf("list.next = %x; want %x", &list.next, &node)
 	}
 	if list.data != 1 {
-		t.Errorf("list.data = %x; want %x", list.data, 1)
+		t.Errorf("list.data = %d; want %d", list.data, 1)
 	}
 	if list.next.data != 2 {
-		t.Errorf("list.next.data = %x; want %x", list.next.data, 2)
+		t.Errorf("list.next.data = %d; want %d", list.next.data, 2)
 	}
 }
 
@@ -33,7 +33,7 @@ func TestAppendNodeToEmptyList(t *testing.T) {
 		t.Errorf("list = %x; want %x", &list.next, &node)
 	}
 	if list.data != 2 {
-		t.Errorf("list.data = %x; want %x", list.data, 2)
+		t.Errorf("list.data = %d; want %d", list.data, 2)
 	}
 }
 
@@ -51,13 +51,13 @@ func TestAppendToTwoElementList(t *testing.T) {
 		t.Errorf("list.next.next = %x; want %x", &list.next, &node3)
 	}
 	if list.data != 1 {
-		t.Errorf("list.data = %x; want %x", list.data, 1)
+		t.Errorf("list.data = %d; want %d", list.data, 1)
 	}
 	if list.next.data != 2 {
-		t.Errorf("list.data = %x; want %x", list.data, 2)
+		t.Errorf("list.data = %d; want %d", list.data, 2)
 	}
 	if list.next.next.data != 3 {
-		t.Errorf("list.data = %x; want %x", list.data, 3)
+		t.Errorf("list.data = %d; want %d", list.data, 3)
 	}
 }
 
@@ -71,16 +71,16 @@ func TestInsertAfterNode(t *testing.T) {
 
 	InsertAfter(node2, node4)
 	if list.data != 1 {
-		t.Errorf("list.data = %x; want %x", list.data, 1)
+		t.Errorf("list.data = %d; want %d", list.data, 1)
 	}
 	if list.next.data != 2 {
-		t.Errorf("list.next.data = %x; want %x", list.data, 2)
+		t.Errorf("list.next.data = %d; want %d", list.data, 2)
 	}
 	if list.next.next.data != 4 {
-		t.Errorf("list.next.next.data = %x; want %x", list.data, 4)
+		t.Errorf("list.next.next.data = %d; want %d", list.data, 4)
 	}
 	if list.next.next.next.data != 3 {
-		t.Errorf("list.next.next.next.data = %x; want %x", list.data, 3)
+		t.Errorf("list.next.next.next.data = %d; want %d", list.data, 3)
 	}
 }
 
