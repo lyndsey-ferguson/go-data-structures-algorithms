@@ -1,4 +1,4 @@
-package main
+package linkedlists
 
 type Node struct {
 	data int
