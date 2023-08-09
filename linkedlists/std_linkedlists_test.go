@@ -108,3 +108,14 @@ func TestSearchNodeRecursively(t *testing.T) {
 		t.Errorf("foundNode is %x; want nil", &foundNode)
 	}
 }
+
+func TestReverseList(t *testing.T) {
+	list := CreateNode(1)
+	node2 := CreateNode(2)
+	node3 := CreateNode(3)
+	list = AppendNode(list, node2)
+	list = AppendNode(list, node3)
+
+	list = ReverseList(list)
+	assert.Equal(t, "3, 2, 1", convertLinkedListToString(list))
+}
