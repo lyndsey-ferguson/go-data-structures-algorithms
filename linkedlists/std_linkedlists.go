@@ -55,3 +55,14 @@ func SearchNodeRecursively(list *Node, data int) *Node {
 	}
 	return SearchNodeRecursively(list.next, data)
 }
+
+func ReverseList(list *Node) *Node {
+	var reversedList *Node
+	for cursor := list; cursor != nil; {
+		tmpNext := cursor.next
+		cursor.next = reversedList
+		reversedList = cursor
+		cursor = tmpNext
+	}
+	return reversedList
+}
