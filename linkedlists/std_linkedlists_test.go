@@ -140,4 +140,32 @@ func TestRemoveFirstNodeWithValue(t *testing.T) {
 
 	updatedList = RemoveFirstNodeWithValue(list2, 9)
 	assert.Equal(t, "0, 4, 5", convertLinkedListToString(updatedList))
+
+	updatedList = RemoveFirstNodeWithValue(nil, 2)
+	assert.Equal(t, "", convertLinkedListToString(updatedList))
+}
+
+func TestRemoveAllNodesWithValue(t *testing.T) {
+	list := CreateNode(2)
+	node2 := CreateNode(2)
+	node3 := CreateNode(2)
+	list = AppendNode(list, node2)
+	list = AppendNode(list, node3)
+
+	updatedList := RemoveAllNodesWithValue(list, 2)
+	assert.Equal(t, "", convertLinkedListToString(updatedList))
+
+	list2 := CreateNode(0)
+	node4 := CreateNode(4)
+	node5 := CreateNode(0)
+	list2 = AppendNode(list2, node4)
+	list2 = AppendNode(list2, node5)
+	updatedList = RemoveAllNodesWithValue(list2, 0)
+	assert.Equal(t, "4", convertLinkedListToString(updatedList))
+
+	updatedList = RemoveAllNodesWithValue(updatedList, 9)
+	assert.Equal(t, "4", convertLinkedListToString(updatedList))
+
+	updatedList = RemoveAllNodesWithValue(nil, 2)
+	assert.Equal(t, "", convertLinkedListToString(updatedList))
 }
