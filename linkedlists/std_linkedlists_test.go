@@ -119,3 +119,25 @@ func TestReverseList(t *testing.T) {
 	list = ReverseList(list)
 	assert.Equal(t, "3, 2, 1", convertLinkedListToString(list))
 }
+
+func TestRemoveFirstNodeWithValue(t *testing.T) {
+	list := CreateNode(1)
+	node2 := CreateNode(2)
+	node3 := CreateNode(3)
+	list = AppendNode(list, node2)
+	list = AppendNode(list, node3)
+
+	updatedList := RemoveFirstNodeWithValue(list, 2)
+	assert.Equal(t, "1, 3", convertLinkedListToString(updatedList))
+
+	list2 := CreateNode(0)
+	node4 := CreateNode(4)
+	node5 := CreateNode(5)
+	list2 = AppendNode(list2, node4)
+	list2 = AppendNode(list2, node5)
+	updatedList = RemoveFirstNodeWithValue(list2, 0)
+	assert.Equal(t, "4, 5", convertLinkedListToString(updatedList))
+
+	updatedList = RemoveFirstNodeWithValue(list2, 9)
+	assert.Equal(t, "0, 4, 5", convertLinkedListToString(updatedList))
+}

@@ -66,3 +66,18 @@ func ReverseList(list *Node) *Node {
 	}
 	return reversedList
 }
+
+func RemoveFirstNodeWithValue(list *Node, data int) *Node {
+	if list.data == data {
+		return list.next
+	}
+
+	for cursor, previous := list.next, list; cursor != nil; cursor, previous = cursor.next, cursor {
+		if cursor.data == data {
+			previous.next = cursor.next
+			break
+		}
+	}
+
+	return list
+}
