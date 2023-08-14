@@ -56,6 +56,13 @@ func SearchNodeRecursively(list *Node, data int) *Node {
 	return SearchNodeRecursively(list.next, data)
 }
 
+type RemoveStrategy int8
+
+const (
+	RemoveFirstStrategy = iota
+	RemoveAllStrategy
+)
+
 func ReverseList(list *Node) *Node {
 	var reversedList *Node
 	for cursor := list; cursor != nil; {
@@ -67,17 +74,32 @@ func ReverseList(list *Node) *Node {
 	return reversedList
 }
 
-func RemoveFirstNodeWithValue(list *Node, data int) *Node {
-	if list.data == data {
-		return list.next
+func RemoveNodesWithValueUsingStrategy(list *Node, data int, strategy RemoveStrategy) *Node {
+	for list != nil && list.data == data {
+		list = list.next
+		if strategy == RemoveFirstStrategy {
+			return list
+		}
+	}
+	if list == nil {
+		return list
 	}
 
 	for cursor, previous := list.next, list; cursor != nil; cursor, previous = cursor.next, cursor {
 		if cursor.data == data {
 			previous.next = cursor.next
-			break
+			if strategy == RemoveFirstStrategy {
+				break
+			}
 		}
 	}
-
 	return list
+}
+
+func RemoveFirstNodeWithValue(list *Node, data int) *Node {
+	return RemoveNodesWithValueUsingStrategy(list, data, RemoveFirstStrategy)
+}
+
+func RemoveAllNodesWithValue(list *Node, data int) *Node {
+	return RemoveNodesWithValueUsingStrategy(list, data, RemoveAllStrategy)
 }
