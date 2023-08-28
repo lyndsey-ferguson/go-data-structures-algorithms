@@ -1,28 +1,15 @@
 package linkedlists
 
 import (
-	"strconv"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
 )
 
-func convertLinkedListToString(list *Node) string {
-	var result string
-	for cursor := list; cursor != nil; {
-		result = result + strconv.Itoa(cursor.data)
-		cursor = cursor.next
-		if cursor != nil {
-			result = result + ", "
-		}
-	}
-	return result
-}
-
 func TestBasicNodeCreation(t *testing.T) {
 	node := CreateNode(1)
 	assert.Equal(t, 1, node.data)
-	assert.Equal(t, "1", convertLinkedListToString(node))
+	assert.Equal(t, "1", node.ToString())
 }
 
 func TestAppendNodeToList(t *testing.T) {
@@ -30,14 +17,14 @@ func TestAppendNodeToList(t *testing.T) {
 	node := CreateNode(2)
 	list = AppendNode(list, node)
 	assert.Equal(t, node, list.next)
-	assert.Equal(t, "1, 2", convertLinkedListToString(list))
+	assert.Equal(t, "1, 2", list.ToString())
 }
 
 func TestAppendNodeToEmptyList(t *testing.T) {
 	node := CreateNode(2)
 	list := AppendNode(nil, node)
 	assert.Equal(t, node, list)
-	assert.Equal(t, "2", convertLinkedListToString(list))
+	assert.Equal(t, "2", list.ToString())
 }
 
 func TestAppendToTwoElementList(t *testing.T) {
@@ -49,7 +36,7 @@ func TestAppendToTwoElementList(t *testing.T) {
 
 	assert.Equal(t, node2, list.next)
 	assert.Equal(t, node3, list.next.next)
-	assert.Equal(t, "1, 2, 3", convertLinkedListToString(list))
+	assert.Equal(t, "1, 2, 3", list.ToString())
 }
 
 func TestInsertAfterNode(t *testing.T) {
@@ -62,7 +49,7 @@ func TestInsertAfterNode(t *testing.T) {
 
 	InsertAfter(node2, node4)
 
-	assert.Equal(t, "1, 2, 4, 3", convertLinkedListToString(list))
+	assert.Equal(t, "1, 2, 4, 3", list.ToString())
 }
 
 func TestRemoveAfter(t *testing.T) {
@@ -73,7 +60,7 @@ func TestRemoveAfter(t *testing.T) {
 	list = AppendNode(list, node3)
 
 	RemoveAfter(list)
-	assert.Equal(t, "1, 3", convertLinkedListToString(list))
+	assert.Equal(t, "1, 3", list.ToString())
 }
 
 // taken from
@@ -117,7 +104,7 @@ func TestReverseList(t *testing.T) {
 	list = AppendNode(list, node3)
 
 	list = ReverseList(list)
-	assert.Equal(t, "3, 2, 1", convertLinkedListToString(list))
+	assert.Equal(t, "3, 2, 1", list.ToString())
 }
 
 func TestRemoveFirstNodeWithValue(t *testing.T) {
@@ -128,7 +115,7 @@ func TestRemoveFirstNodeWithValue(t *testing.T) {
 	list = AppendNode(list, node3)
 
 	updatedList := RemoveFirstNodeWithValue(list, 2)
-	assert.Equal(t, "1, 3", convertLinkedListToString(updatedList))
+	assert.Equal(t, "1, 3", updatedList.ToString())
 
 	list2 := CreateNode(0)
 	node4 := CreateNode(4)
@@ -136,13 +123,13 @@ func TestRemoveFirstNodeWithValue(t *testing.T) {
 	list2 = AppendNode(list2, node4)
 	list2 = AppendNode(list2, node5)
 	updatedList = RemoveFirstNodeWithValue(list2, 0)
-	assert.Equal(t, "4, 5", convertLinkedListToString(updatedList))
+	assert.Equal(t, "4, 5", updatedList.ToString())
 
 	updatedList = RemoveFirstNodeWithValue(list2, 9)
-	assert.Equal(t, "0, 4, 5", convertLinkedListToString(updatedList))
+	assert.Equal(t, "0, 4, 5", updatedList.ToString())
 
 	updatedList = RemoveFirstNodeWithValue(nil, 2)
-	assert.Equal(t, "", convertLinkedListToString(updatedList))
+	assert.Equal(t, "", updatedList.ToString())
 }
 
 func TestRemoveAllNodesWithValue(t *testing.T) {
@@ -153,7 +140,7 @@ func TestRemoveAllNodesWithValue(t *testing.T) {
 	list = AppendNode(list, node3)
 
 	updatedList := RemoveAllNodesWithValue(list, 2)
-	assert.Equal(t, "", convertLinkedListToString(updatedList))
+	assert.Equal(t, "", updatedList.ToString())
 
 	list2 := CreateNode(0)
 	node4 := CreateNode(4)
@@ -161,11 +148,11 @@ func TestRemoveAllNodesWithValue(t *testing.T) {
 	list2 = AppendNode(list2, node4)
 	list2 = AppendNode(list2, node5)
 	updatedList = RemoveAllNodesWithValue(list2, 0)
-	assert.Equal(t, "4", convertLinkedListToString(updatedList))
+	assert.Equal(t, "4", updatedList.ToString())
 
 	updatedList = RemoveAllNodesWithValue(updatedList, 9)
-	assert.Equal(t, "4", convertLinkedListToString(updatedList))
+	assert.Equal(t, "4", updatedList.ToString())
 
 	updatedList = RemoveAllNodesWithValue(nil, 2)
-	assert.Equal(t, "", convertLinkedListToString(updatedList))
+	assert.Equal(t, "", updatedList.ToString())
 }

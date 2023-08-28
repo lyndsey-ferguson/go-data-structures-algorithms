@@ -2,6 +2,8 @@ package adjacencymatrix
 
 import (
 	"strconv"
+
+	"github.com/lyndsey-ferguson/go-data-structures-algorithms/linkedlists"
 )
 
 const (
@@ -56,4 +58,35 @@ func (g *Graph) Bfs(s int) string {
 		}
 	}
 	return result
+}
+
+func (g *Graph) dfs(s int, visited []bool) string {
+	var stack linkedlists.Stack
+	var result string
+
+	stack.Push(s)
+	for !stack.IsEmpty() {
+		top, _ := stack.Pop()
+		if visited[top] {
+			continue
+		} else {
+			visited[top] = true
+			if len(result) > 0 {
+				result += " "
+			}
+			result += strconv.Itoa(top)
+		}
+		for adjacent := 0; adjacent < g.v; adjacent++ {
+			if g.adj[top][adjacent] {
+				if !visited[adjacent] {
+					stack.Push(adjacent)
+				}
+			}
+		}
+	}
+	return result
+}
+func (g *Graph) Dfs(s int) string {
+	visited := make([]bool, MaxVertices)
+	return g.dfs(s, visited)
 }

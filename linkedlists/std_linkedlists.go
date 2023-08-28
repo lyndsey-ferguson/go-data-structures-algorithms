@@ -1,8 +1,58 @@
 package linkedlists
 
+import (
+	"fmt"
+	"strconv"
+)
+
 type Node struct {
 	data int
 	next *Node
+}
+
+type Stack struct {
+	elements *Node
+}
+
+func (s *Stack) Push(i int) {
+	n := CreateNode(i)
+
+	if s.elements == nil {
+		s.elements = n
+	} else {
+		n.next = s.elements
+		s.elements = n
+	}
+}
+
+func (s *Stack) IsEmpty() bool {
+	return s.elements == nil
+}
+
+func (s *Stack) Pop() (int, bool) {
+	if s.elements == nil {
+		return 0, false
+	}
+	i := s.elements.data
+	s.elements = s.elements.next
+
+	return i, true
+}
+
+func (s *Stack) Print() {
+	fmt.Printf("%s\n", s.elements.ToString())
+}
+
+func (list *Node) ToString() string {
+	var result string
+	for cursor := list; cursor != nil; {
+		result = result + strconv.Itoa(cursor.data)
+		cursor = cursor.next
+		if cursor != nil {
+			result = result + ", "
+		}
+	}
+	return result
 }
 
 func CreateNode(data int) *Node {
