@@ -19,3 +19,18 @@ func TestQuickSort(t *testing.T) {
 	QuickSort(array, 0, len(array)-1)
 	assert.Equal(t, []int{1, 5, 7, 8, 9, 10}, array)
 }
+
+func TestArePermutationsFailsWithUnequalLengthStrings(t *testing.T) {
+	result := ArePermutations("abcde", "abcdefg")
+	assert.False(t, result)
+}
+
+func TestArePermutationsPassesReorderedEqualStrings(t *testing.T) {
+	result := ArePermutations("aaabcca", "aaaacbc")
+	assert.True(t, result)
+}
+
+func TestArePermutationsFailsWithDifferentStrings(t *testing.T) {
+	result := ArePermutations("aaabcca", "aaaabbc")
+	assert.False(t, result)
+}
