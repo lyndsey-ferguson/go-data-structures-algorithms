@@ -73,3 +73,21 @@ func QuickSort(arr []int, low int, high int) {
 		QuickSort(arr, partitionIndex+1, high)
 	}
 }
+
+func ArePermutations(s1 string, s2 string) bool {
+	if len(s1) != len(s2) {
+		return false
+	}
+	lettersCounter := make(map[byte]int)
+
+	for i := 0; i < len(s1); i++ {
+		lettersCounter[s1[i]]++
+	}
+	for i := 0; i < len(s2); i++ {
+		lettersCounter[s2[i]]--
+		if lettersCounter[s2[i]] < 0 {
+			return false
+		}
+	}
+	return true
+}
