@@ -44,3 +44,23 @@ func TestUrlify(t *testing.T) {
 	urlify(s2, len(s2))
 	assert.Equal(t, []byte("Blinkey"), s2)
 }
+
+func TestIsPermutationOfPalindrome(t *testing.T) {
+	s1 := []byte("i")
+	assert.True(t, isPermutationOfPalindrome(s1))
+
+	s2 := []byte("oio")
+	assert.True(t, isPermutationOfPalindrome(s2))
+
+	s3 := []byte("oi")
+	assert.False(t, isPermutationOfPalindrome(s3))
+
+	s4 := []byte("tact coa")
+	assert.True(t, isPermutationOfPalindrome(s4))
+
+	s5 := []byte("tact cot")
+	assert.False(t, isPermutationOfPalindrome(s5))
+
+	s6 := []byte("A man, a plan, a canal—Panama")
+	assert.True(t, isPermutationOfPalindrome(s6))
+}

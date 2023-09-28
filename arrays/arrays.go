@@ -106,3 +106,31 @@ func urlify(s []byte, trueLength int) {
 		}
 	}
 }
+
+func isAlphaNumeric(b byte) bool {
+	if (b < 'a' || b > 'z') && (b < 'A' || b > 'Z') && (b < '0' || b > '9') {
+		return false
+	}
+	return true
+}
+
+func isPermutationOfPalindrome(s []byte) bool {
+	s = []byte(strings.ToLower(string(s)))
+	countOfOdds := 0
+	letterCountsHash := make(map[byte]int)
+	for i := 0; i < len(s); i++ {
+		letter := s[i]
+		if !isAlphaNumeric(letter) {
+			continue
+		}
+
+		letterCountsHash[letter] += 1
+		if letterCountsHash[letter]%2 == 0 {
+			countOfOdds -= 1
+		} else {
+			countOfOdds += 1
+		}
+	}
+
+	return (countOfOdds == 1)
+}
