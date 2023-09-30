@@ -132,5 +132,5 @@ func isPermutationOfPalindrome(s []byte) bool {
 		}
 	}
 
-	return (countOfOdds == 1)
+	return (countOfOdds <= 1)
 }
