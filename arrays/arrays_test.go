@@ -63,4 +63,7 @@ func TestIsPermutationOfPalindrome(t *testing.T) {
 
 	s6 := []byte("A man, a plan, a canal—Panama")
 	assert.True(t, isPermutationOfPalindrome(s6))
+
+	s7 := []byte("aa")
+	assert.True(t, isPermutationOfPalindrome((s7)))
 }
