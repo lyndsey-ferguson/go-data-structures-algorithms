@@ -67,3 +67,26 @@ func TestIsPermutationOfPalindrome(t *testing.T) {
 	s7 := []byte("aa")
 	assert.True(t, isPermutationOfPalindrome((s7)))
 }
+
+func TestIsPermutationOfPalindromeNoExtra(t *testing.T) {
+	s1 := []byte("i")
+	assert.True(t, isPermutationOfPalindromeNoExtra(s1))
+
+	s2 := []byte("oio")
+	assert.True(t, isPermutationOfPalindromeNoExtra(s2))
+
+	s3 := []byte("oi")
+	assert.False(t, isPermutationOfPalindromeNoExtra(s3))
+
+	s4 := []byte("tact coa")
+	assert.True(t, isPermutationOfPalindromeNoExtra(s4))
+
+	s5 := []byte("tact cot")
+	assert.False(t, isPermutationOfPalindromeNoExtra(s5))
+
+	s6 := []byte("A man, a plan, a canal—Panama")
+	assert.True(t, isPermutationOfPalindromeNoExtra(s6))
+
+	s7 := []byte("aa")
+	assert.True(t, isPermutationOfPalindromeNoExtra((s7)))
+}

@@ -1,6 +1,7 @@
 package arrays
 
 import (
+	"cmp"
 	"strconv"
 	"strings"
 )
@@ -51,7 +52,7 @@ func MergeSort(array *[]int, indent int) {
 	}
 }
 
-func partition(arr []int, low int, high int) int {
+func partition[T cmp.Ordered](arr []T, low int, high int) int {
 	pivot := arr[high]
 
 	bestKnownCorrectPivotIndex := low - 1
@@ -66,7 +67,7 @@ func partition(arr []int, low int, high int) int {
 	return bestKnownCorrectPivotIndex + 1
 }
 
-func QuickSort(arr []int, low int, high int) {
+func QuickSort[T cmp.Ordered](arr []T, low int, high int) {
 	if low < high {
 		partitionIndex := partition(arr, low, high)
 		QuickSort(arr, low, partitionIndex-1)
@@ -133,4 +134,20 @@ func isPermutationOfPalindrome(s []byte) bool {
 	}
 
 	return (countOfOdds <= 1)
+}
+
+func isPermutationOfPalindromeNoExtra(s []byte) bool {
+	s = []byte(strings.ToLower(string(s)))
+	discardedLetterCount := 0
+	QuickSort(s, 0, len(s)-1)
+
+	for i := 0; i < len(s); i++ {
+		if !isAlphaNumeric(s[i]) {
+			discardedLetterCount++
+		} else if i < len(s)-1 && s[i] == s[i+1] {
+			discardedLetterCount += 2
+			i += 1
+		}
+	}
+	return (len(s)-discardedLetterCount <= 1)
 }
