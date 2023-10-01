@@ -151,3 +151,25 @@ func isPermutationOfPalindromeNoExtra(s []byte) bool {
 	}
 	return (len(s)-discardedLetterCount <= 1)
 }
+
+func getCaseInsensitiveCharCode(b byte) int {
+	if b >= 'A' && b <= 'Z' {
+		b = (b - 'A') + 'a'
+	}
+	if b >= 'a' && b <= 'z' {
+		return int(b) - int('a')
+	}
+	return -1
+}
+
+func isPermutationOfPalindromeBitVector(s []byte) bool {
+	bv := 0
+
+	for i := 0; i < len(s); i++ {
+		code := getCaseInsensitiveCharCode(s[i])
+		if code != -1 {
+			bv ^= (1 << code)
+		}
+	}
+	return (bv&(bv-1) == 0)
+}
