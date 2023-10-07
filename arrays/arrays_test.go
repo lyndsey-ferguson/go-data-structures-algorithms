@@ -130,3 +130,13 @@ func TestAreStringsLessThanTwoEditsApart(t *testing.T) {
 	s1, s2 = []byte("pae"), []byte("pale")
 	assert.True(t, areStringsLessThanTwoEditsApart(s1, s2))
 }
+
+func TestGetCompressedStringReturnsOriginalWhenCompressedStringSameLength(t *testing.T) {
+	s := []byte("aabbccdd")
+	assert.Equal(t, s, getCompressedString(s))
+}
+
+func TestGetCompressedStringReturnsCompressedStringWhenSmaller(t *testing.T) {
+	s := []byte("aabcccccaaa")
+	assert.Equal(t, []byte("a2bc5a3"), getCompressedString(s))
+}
