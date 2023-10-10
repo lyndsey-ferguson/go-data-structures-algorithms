@@ -29,3 +29,26 @@ func rotateImage90Degress(image *[][]Pixel) {
 	}
 	(*image) = rotatedImage
 }
+
+func rotateImage90DegressInPlace(image *[][]Pixel) {
+	rows := len(*image)
+	for row := 0; row < rows; row++ {
+		if len((*image)[row]) != rows {
+			panic(fmt.Sprintf("Non-square image with %d rows has a column with %d elements", rows, len((*image)[row])))
+		}
+	}
+	n := rows
+
+	// transpose matrix
+	for x := 0; x < n; x++ {
+		for y := x; y < n; y++ {
+			(*image)[y][x], (*image)[x][y] = (*image)[x][y], (*image)[y][x]
+		}
+	}
+	// reverse each row
+	for x := 0; x < n/2; x++ {
+		for y := 0; y < n; y++ {
+			(*image)[y][x], (*image)[y][n-1-x] = (*image)[y][n-1-x], (*image)[y][x]
+		}
+	}
+}
