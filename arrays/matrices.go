@@ -30,7 +30,7 @@ func rotateImage90Degress(image *[][]Pixel) {
 	(*image) = rotatedImage
 }
 
-func rotateImage90DegressInPlace(image *[][]Pixel) {
+func rotateImage90DegressInPlace1(image *[][]Pixel) {
 	rows := len(*image)
 	for row := 0; row < rows; row++ {
 		if len((*image)[row]) != rows {
@@ -51,4 +51,25 @@ func rotateImage90DegressInPlace(image *[][]Pixel) {
 			(*image)[y][x], (*image)[y][n-1-x] = (*image)[y][n-1-x], (*image)[y][x]
 		}
 	}
+}
+
+func rotateImage90DegressInPlace2(image *[][]Pixel) {
+
+	offset := 0
+	for n := len(*image); n > 1; n = n - 2 {
+		for i := 0; i < n-1; i++ {
+			topY, topX := offset, offset+i
+			leftY, leftX := offset+n-1-i, offset
+			bottomY, bottomX := offset+n-1, offset+n-1-i
+			rightY, rightX := offset+i, offset+n-1
+
+			tmp := (*image)[topY][topX]
+			(*image)[topY][topX] = (*image)[leftY][leftX]
+			(*image)[leftY][leftX] = (*image)[bottomY][bottomX]
+			(*image)[bottomY][bottomX] = (*image)[rightY][rightX]
+			(*image)[rightY][rightX] = tmp
+		}
+		offset += 1
+	}
+
 }
