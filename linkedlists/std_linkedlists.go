@@ -2,19 +2,18 @@ package linkedlists
 
 import (
 	"fmt"
-	"strconv"
 )
 
-type Node struct {
-	data int
-	next *Node
+type Node[T comparable] struct {
+	data T
+	next *Node[T]
 }
 
-type Stack struct {
-	elements *Node
+type Stack[T comparable] struct {
+	elements *Node[T]
 }
 
-func (s *Stack) Push(i int) {
+func (s *Stack[T]) Push(i T) {
 	n := CreateNode(i)
 
 	if s.elements == nil {
@@ -25,13 +24,14 @@ func (s *Stack) Push(i int) {
 	}
 }
 
-func (s *Stack) IsEmpty() bool {
+func (s *Stack[T]) IsEmpty() bool {
 	return s.elements == nil
 }
 
-func (s *Stack) Pop() (int, bool) {
+func (s *Stack[T]) Pop() (T, bool) {
 	if s.elements == nil {
-		return 0, false
+		var nonExistant T
+		return nonExistant, false
 	}
 	i := s.elements.data
 	s.elements = s.elements.next
@@ -39,14 +39,14 @@ func (s *Stack) Pop() (int, bool) {
 	return i, true
 }
 
-func (s *Stack) Print() {
+func (s *Stack[T]) Print() {
 	fmt.Printf("%s\n", s.elements.ToString())
 }
 
-func (list *Node) ToString() string {
+func (list *Node[T]) ToString() string {
 	var result string
 	for cursor := list; cursor != nil; {
-		result = result + strconv.Itoa(cursor.data)
+		result = result + fmt.Sprintf("%v", cursor.data)
 		cursor = cursor.next
 		if cursor != nil {
 			result = result + ", "
@@ -55,13 +55,13 @@ func (list *Node) ToString() string {
 	return result
 }
 
-func CreateNode(data int) *Node {
-	node := new(Node)
+func CreateNode[T comparable](data T) *Node[T] {
+	node := new(Node[T])
 	node.data = data
 	return node
 }
 
-func AppendNode(list *Node, node *Node) *Node {
+func AppendNode[T comparable](list *Node[T], node *Node[T]) *Node[T] {
 	if list == nil {
 		return node
 	}
@@ -73,20 +73,20 @@ func AppendNode(list *Node, node *Node) *Node {
 	return list
 }
 
-func InsertAfter(nodeBefore *Node, nodeAfter *Node) {
+func InsertAfter[T comparable](nodeBefore *Node[T], nodeAfter *Node[T]) {
 	if nodeBefore != nil {
 		nodeAfter.next = nodeBefore.next
 		nodeBefore.next = nodeAfter
 	}
 }
 
-func RemoveAfter(node *Node) {
+func RemoveAfter[T comparable](node *Node[T]) {
 	if node != nil && node.next != nil {
 		node.next = node.next.next
 	}
 }
 
-func SearchNodeIteratively(list *Node, data int) *Node {
+func SearchNodeIteratively[T comparable](list *Node[T], data T) *Node[T] {
 	for cursor := list; cursor != nil; {
 		if cursor.data == data {
 			return cursor
@@ -96,7 +96,7 @@ func SearchNodeIteratively(list *Node, data int) *Node {
 	return nil
 }
 
-func SearchNodeRecursively(list *Node, data int) *Node {
+func SearchNodeRecursively[T comparable](list *Node[T], data T) *Node[T] {
 	if list == nil {
 		return nil
 	}
@@ -113,8 +113,8 @@ const (
 	RemoveAllStrategy
 )
 
-func ReverseList(list *Node) *Node {
-	var reversedList *Node
+func ReverseList[T comparable](list *Node[T]) *Node[T] {
+	var reversedList *Node[T]
 	for cursor := list; cursor != nil; {
 		tmpNext := cursor.next
 		cursor.next = reversedList
@@ -124,7 +124,7 @@ func ReverseList(list *Node) *Node {
 	return reversedList
 }
 
-func RemoveNodesWithValueUsingStrategy(list *Node, data int, strategy RemoveStrategy) *Node {
+func RemoveNodesWithValueUsingStrategy[T comparable](list *Node[T], data T, strategy RemoveStrategy) *Node[T] {
 	for list != nil && list.data == data {
 		list = list.next
 		if strategy == RemoveFirstStrategy {
@@ -146,10 +146,10 @@ func RemoveNodesWithValueUsingStrategy(list *Node, data int, strategy RemoveStra
 	return list
 }
 
-func RemoveFirstNodeWithValue(list *Node, data int) *Node {
+func RemoveFirstNodeWithValue[T comparable](list *Node[T], data T) *Node[T] {
 	return RemoveNodesWithValueUsingStrategy(list, data, RemoveFirstStrategy)
 }
 
-func RemoveAllNodesWithValue(list *Node, data int) *Node {
+func RemoveAllNodesWithValue[T comparable](list *Node[T], data T) *Node[T] {
 	return RemoveNodesWithValueUsingStrategy(list, data, RemoveAllStrategy)
 }
