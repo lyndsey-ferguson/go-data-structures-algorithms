@@ -61,7 +61,7 @@ func (g *Graph) Bfs(s int) string {
 }
 
 func (g *Graph) dfs(s int, visited []bool) string {
-	var stack linkedlists.Stack
+	var stack linkedlists.Stack[int]
 	var result string
 
 	stack.Push(s)
