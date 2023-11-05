@@ -185,3 +185,13 @@ func TestRemoveDuplicatesWithHash(t *testing.T) {
 	removeDuplicatesWithHash(list)
 	assert.Equal(t, expectedList.ToString(), list.ToString())
 }
+
+func TestFindKLastNode(t *testing.T) {
+	list := createLetterList([]string{"A", "B", "C"})
+
+	assert.Equal(t, "C", findKthLastNode(list, 0).data)
+	assert.Equal(t, "B", findKthLastNode(list, 1).data)
+	assert.Equal(t, "A", findKthLastNode(list, 2).data)
+	assert.Nil(t, findKthLastNode(list, 3))
+	assert.Nil(t, findKthLastNode(list, -1))
+}

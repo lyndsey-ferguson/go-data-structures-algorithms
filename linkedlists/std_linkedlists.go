@@ -223,3 +223,20 @@ func removeDuplicatesWithHash[T comparable](list *Node[T]) {
 	}
 	end.next = nil
 }
+
+func findKthLastNode[T comparable](list *Node[T], k int) *Node[T] {
+	if k < 0 {
+		return nil
+	}
+
+	var kth *Node[T]
+	for cursor := list; cursor != nil; cursor = cursor.next {
+		if k == 0 {
+			kth = list
+		} else if k < 0 && kth.next != nil {
+			kth = kth.next
+		}
+		k = k - 1
+	}
+	return kth
+}
