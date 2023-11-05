@@ -178,3 +178,10 @@ func TestRemoveDuplicatesInline(t *testing.T) {
 	assert.Equal(t, expectedList.ToString(), list.ToString())
 }
 
+func TestRemoveDuplicatesWithHash(t *testing.T) {
+	list := createLetterList([]string{"x", "w", "y", "x", "h", "y", "a", "x"})
+	expectedList := createLetterList([]string{"x", "w", "y", "h", "a"})
+
+	removeDuplicatesWithHash(list)
+	assert.Equal(t, expectedList.ToString(), list.ToString())
+}

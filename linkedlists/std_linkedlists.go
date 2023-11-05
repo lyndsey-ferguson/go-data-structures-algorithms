@@ -189,3 +189,37 @@ func removeDuplicatesInline[T comparable](list *Node[T]) {
 	}
 }
 
+/*
+So, in the above algorithm, if we've visited a node once, we already "know" about
+its value. Do we really need to look at it again?
+
+No, we can track if we've already visited a node and, instead of multiple passes
+of the same node, we can pass once. That would be a runtime of O(N)
+*/
+
+func removeDuplicatesWithHash[T comparable](list *Node[T]) {
+	if list == nil || list.next == nil {
+		// if there are fewer than 1 elements, return early as
+		// there is no chance for duplicates
+		return
+	}
+	end := list         // keep track of the end of the list
+	cursor := list.next // point to the next element
+
+	// Create a map of nodes that we've already found
+	// if it is unique, append the found node and
+	// track it.
+	foundNodes := map[T]int{list.data: 1}
+
+	for cursor != nil {
+		_, ok := foundNodes[cursor.data]
+		if !ok {
+			foundNodes[cursor.data] = 1
+			end.next = cursor
+			end = cursor
+		}
+		cursor = cursor.next
+		end.next = nil
+	}
+	end.next = nil
+}
