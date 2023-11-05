@@ -156,3 +156,32 @@ func TestRemoveAllNodesWithValue(t *testing.T) {
 	updatedList = RemoveAllNodesWithValue(nil, 2)
 	assert.Equal(t, "", updatedList.ToString())
 }
+
+func createLetterList(letters []string) *Node[string] {
+	if len(letters) < 1 {
+		return nil
+	}
+	list := CreateNode(letters[0])
+
+	for i, end := 1, list; i < len(letters); i, end = i+1, end.next {
+		node := CreateNode(letters[i])
+		AppendNode(end, node)
+	}
+	return list
+}
+
+func TestRemoveDuplicatesInline(t *testing.T) {
+	list := createLetterList([]string{"x", "w", "y", "x", "h", "y", "a", "x"})
+	expectedList := createLetterList([]string{"x", "w", "y", "h", "a"})
+
+	removeDuplicatesInline(list)
+	assert.Equal(t, expectedList.ToString(), list.ToString())
+}
+
+func TestRemoveDuplicatesWithHash(t *testing.T) {
+	list := createLetterList([]string{"x", "w", "y", "x", "h", "y", "a", "x"})
+	expectedList := createLetterList([]string{"x", "w", "y", "h", "a"})
+
+	removeDuplicatesWithHash(list)
+	assert.Equal(t, expectedList.ToString(), list.ToString())
+}
