@@ -240,3 +240,28 @@ func findKthLastNode[T comparable](list *Node[T], k int) *Node[T] {
 	}
 	return kth
 }
+
+/*
+	There is also a recursive version of 'findKthLastNode'
+*/
+
+func findKthLastNodeRecursively[T comparable](list *Node[T], k int) *Node[T] {
+	localK := k
+	return _findKthLastNodeRecursively[T](list, &localK)
+}
+
+func _findKthLastNodeRecursively[T comparable](list *Node[T], k *int) *Node[T] {
+	if list == nil {
+		return nil
+	} else {
+		kth := _findKthLastNodeRecursively[T](list.next, k)
+		if kth != nil {
+			return kth
+		} else if *k == 0 {
+			return list
+		} else {
+			*k = *k - 1
+			return nil
+		}
+	}
+}
