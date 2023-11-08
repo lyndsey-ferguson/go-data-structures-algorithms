@@ -265,3 +265,17 @@ func _findKthLastNodeRecursively[T comparable](list *Node[T], k *int) *Node[T] {
 		}
 	}
 }
+
+func deleteMiddleNode[T comparable](middle *Node[T]) {
+	if middle == nil || middle.next == nil {
+		return
+	}
+	cursor := middle
+	for scout := middle.next; scout != nil; scout = scout.next {
+		cursor.data = scout.data
+		if scout.next != nil {
+			cursor = cursor.next
+		}
+	}
+	cursor.next = nil
+}
