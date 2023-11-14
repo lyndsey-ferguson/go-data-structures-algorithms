@@ -157,17 +157,21 @@ func TestRemoveAllNodesWithValue(t *testing.T) {
 	assert.Equal(t, "", updatedList.ToString())
 }
 
-func createLetterList(letters []string) *Node[string] {
-	if len(letters) < 1 {
+func createList[T comparable](items []T) *Node[T] {
+	if len(items) < 1 {
 		return nil
 	}
-	list := CreateNode(letters[0])
+	list := CreateNode(items[0])
 
-	for i, end := 1, list; i < len(letters); i, end = i+1, end.next {
-		node := CreateNode(letters[i])
+	for i, end := 1, list; i < len(items); i, end = i+1, end.next {
+		node := CreateNode(items[i])
 		AppendNode(end, node)
 	}
 	return list
+}
+
+func createLetterList(letters []string) *Node[string] {
+	return createList[string](letters)
 }
 
 func TestRemoveDuplicatesInline(t *testing.T) {
@@ -218,4 +222,12 @@ func TestDeleteMiddleNode(t *testing.T) {
 	expectedList2 := createLetterList([]string{"A", "D", "E", "F"})
 	deleteMiddleNode(list.next)
 	assert.Equal(t, expectedList2.ToString(), list.ToString())
+}
+
+func TestPartitionIntList(t *testing.T) {
+	list := createList([]int32{3, 5, 8, 5, 10, 2, 1})
+	expectedList := createList([]int32{3, 2, 1, 5, 10, 5, 8})
+
+	partitionIntList(list, 5)
+	assert.Equal(t, expectedList.ToString(), list.ToString())
 }
