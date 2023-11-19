@@ -2,8 +2,6 @@ package linkedlists
 
 import (
 	"fmt"
-	"io"
-	"os"
 )
 
 type Node[T comparable] struct {
@@ -311,81 +309,4 @@ func partitionIntList[T int32](list *Node[T], partition T) {
 		low = findNode(low.next, findLowlyPlacedHighNodeComparator)
 		high = findNode(high.next, findHighlyPlacedLowNodeComparator)
 	}
-}
-
-func printNumberByDigitsReversed(x int32, out io.Writer) {
-	if out == nil {
-		out = os.Stdout
-	}
-	digits := []byte("0123456789")
-	if x < 10 {
-		fmt.Fprintf(out, "%c", digits[x])
-		return
-	}
-	fmt.Fprintf(out, "%c", digits[x%10])
-	printNumberByDigitsReversed(x/10, out)
-}
-
-func printNumberByDigits(x int32, out io.Writer) {
-	if out == nil {
-		out = os.Stdout
-	}
-	digits := []byte("0123456789")
-	if x < 10 {
-		fmt.Fprintf(out, "%c", []any{digits[x]}...)
-		return
-	}
-	printNumberByDigits(x/10, out)
-	fmt.Fprintf(out, "%c", []any{digits[x%10]}...)
-}
-
-func numberToReverseList[T int32](i T) *Node[T] {
-	if i < 10 {
-		return CreateNode(i)
-	}
-	list := CreateNode(i % 10)
-	list.next = numberToReverseList(i / 10)
-
-	return list
-}
-
-func numberToList[T int32](i T) *Node[T] {
-	if i < 10 {
-		return CreateNode(i)
-	}
-	// 912, 91
-	list := numberToList(i / 10) // numberToList(91) + 1, ([numberToList(9)] -> 1) + [2]
-	AppendNode(list, CreateNode(i%10))
-
-	return list
-}
-
-func reverseListToNumber[T int32](list *Node[T]) T {
-	var number T
-	for i, cursor := T(1), list; cursor != nil; i, cursor = i*10, cursor.next {
-		number += cursor.data * i
-	}
-	return number
-}
-
-func listToNumber[T int32](list *Node[T]) T {
-	var number T
-	for cursor := list; cursor != nil; cursor = cursor.next {
-		number = number * T(10)
-		number += cursor.data
-	}
-
-	return number
-}
-
-func sumReverseLists[T int32](list1 *Node[T], list2 *Node[T]) *Node[T] {
-	number1 := reverseListToNumber(list1)
-	number2 := reverseListToNumber(list2)
-	return numberToReverseList(number1 + number2)
-}
-
-func sumLists[T int32](list1 *Node[T], list2 *Node[T]) *Node[T] {
-	number1 := listToNumber(list1)
-	number2 := listToNumber(list2)
-	return numberToList(number1 + number2)
 }
