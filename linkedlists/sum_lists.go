@@ -215,6 +215,58 @@ I need to sum the two values. If the value is greater than two digits, I need to
 
 We should also confirm that we get an error if we dare to send a multidigit number in as v1 or v2.
 
+*/
+
+/*
+I think summedNodeWithCarry by itself is fine, I need to figure out how to
+follow one list down when another list has ended to set the pointer in the
+correct position
+*/
+func summedNodeWithCarry[T int32](v1 T, v2 T, carry T) (T, *Node[T], error) {
+	if v1 > 9 || v2 > 9 || carry > 9 {
+		biggestNumber := max(v1, v2, carry)
+		return 0, nil, fmt.Errorf("error: nodes and the carry value must be only single digits! [%d]", biggestNumber)
+	}
+	sum := v1 + v2 + carry
+	if sum < T(10) {
+		return T(0), CreateNode(sum), nil
+	}
+	return sum / T(10), CreateNode(sum % T(10)), nil
+}
+
+func sumForwardListsWithCarry[T int32](list1 *Node[T], list2 *Node[T]) (T, *Node[T], error) {
+	if list1 == nil || list2 == nil {
+		return 0, nil, nil
+	}
+	if list1.next == nil && list2.next == nil {
+		return summedNodeWithCarry(list1.data, list2.data, 0)
+	}
+	carry, summedChildForwardList, err := sumForwardListsWithCarry(list1.next, list2.next)
+	if err != nil {
+		return 0, nil, err
+	}
+	carry, summedForwardList, err := summedNodeWithCarry(list1.data, list2.data, carry)
+	if err != nil {
+		return 0, nil, err
+	}
+	AppendNode(summedForwardList, summedChildForwardList)
+	return carry, summedForwardList, nil
+}
+
+func sumForwardListsInOnePass[T int32](list1 *Node[T], list2 *Node[T]) (*Node[T], error) {
+	carry, summedForwardList, err := sumForwardListsWithCarry(list1, list2)
+	if err != nil {
+		return nil, err
+	}
+	if carry != 0 {
+		head := CreateNode(carry)
+		head.next = summedForwardList
+		return head, nil
+	}
+	return summedForwardList, nil
+}
+
+/*
 Now, we have it working for lists that have the same number of nodes. However, we are assuming that
 we have the same number of digits in each list. What if we have a smaller
 list for one of the parameters. It should fail right now, let's add a test to demonstrate that
@@ -273,53 +325,108 @@ list down, and do somethihg fancy when we come back up.
 
 Then, we add 7 and 5. Then, we check the depth as we come back up whether or
 not to come back up on both lists, or just one (adding the carry).
-*/
 
-/*
-I think summedNodeWithCarry by itself is fine, I need to figure out how to
-follow one list down when another list has ended to set the pointer in the
-correct position
+Okay, what if we had two stacks, we push all the elements for one list to one stack
+and all the other elements for the other list to the other stack.
+
+l1: 9 -> 7 (97)
+
+l2: 9 -> 9 -> 4 -> 5 (9945)
+
+summed list: 1 -> 0 -> 0 -> 4 -> 2 (10042)
+
+Then, we pop each element from each stack and add them together, carrying the "carry". If one stack
+is empty, we simply add the left over carry to the values of the non-empty popped element
+
+s1:
+
+	7
+	9
+
+s2:
+
+	5
+	4
+	9
+	9
+
+iteration 1:
+
+0 (carry) + 7 + 5 = 12 => 1, [2] // 1 carry, a node with value 2
+1 + 4 + 9 = 14 => 1, [4] -> [2]; // 1 carry, add the 4 node in front of the 2 node from last iteration
+1 + 9 + 0 (nil item) = 1, [0] -> [4] -> [2]; // 1 carry, and add the [0] node in front of the list from last iteration
+1 + 9 + 0 (nil item) = 1, [0] -> [0] -> [4] -> [2]; // 1 carry, and add the [0] node in front of the list from last iteration
+// at this point, no more elements in either stack, but there is a 1 carry, let's add that as a node in front of the list from the last iteration
+
+[1] -> [0] -> [0] -> [4] -> [2]
 */
-func summedNodeWithCarry[T int32](v1 T, v2 T, carry T) (T, *Node[T], error) {
-	if v1 > 9 || v2 > 9 || carry > 9 {
-		biggestNumber := max(v1, v2, carry)
-		return 0, nil, fmt.Errorf("error: nodes and the carry value must be only single digits! [%d]", biggestNumber)
+func _stackTwoForwardLists[T int32](list1 *Node[T], list2 *Node[T], stack1 *Stack[*Node[T]], stack2 *Stack[*Node[T]]) error {
+
+	for c1, c2 := list1, list2; /* keep going while one of these are != nil */ c1 != nil || c2 != nil; {
+		if c1 != nil {
+			if c1.data > 9 {
+				return fmt.Errorf("error: nodes must contain only single digits! [%d]", c1.data)
+			}
+			(*stack1).Push(c1)
+			c1 = c1.next
+		}
+		if c2 != nil {
+			if c2.data > 9 {
+				return fmt.Errorf("error: nodes must contain only single digits! [%d]", c2.data)
+			}
+			(*stack2).Push(c2)
+			c2 = c2.next
+		}
 	}
-	sum := v1 + v2 + carry
-	if sum < T(10) {
-		return T(0), CreateNode(sum), nil
-	}
-	return sum / T(10), CreateNode(sum % T(10)), nil
+	return nil
 }
 
-func sumForwardListsWithCarry[T int32](list1 *Node[T], list2 *Node[T]) (T, *Node[T], error) {
-	if list1 == nil || list2 == nil {
-		return 0, nil, nil
+func sumUnevenForwardLists[T int32](list1 *Node[T], list2 *Node[T]) (*Node[T], error) {
+	if list2 == nil && list1 == nil {
+		return nil, nil
+	} else if list1 == nil {
+		return list2, nil
+	} else if list2 == nil {
+		return list1, nil
 	}
-	if list1.next == nil && list2.next == nil {
-		return summedNodeWithCarry(list1.data, list2.data, 0)
-	}
-	carry, summedChildForwardList, err := sumForwardListsWithCarry(list1.next, list2.next)
-	if err != nil {
-		return 0, nil, err
-	}
-	carry, summedForwardList, err := summedNodeWithCarry(list1.data, list2.data, carry)
-	if err != nil {
-		return 0, nil, err
-	}
-	AppendNode(summedForwardList, summedChildForwardList)
-	return carry, summedForwardList, nil
-}
 
-func sumForwardListsInOnePass[T int32](list1 *Node[T], list2 *Node[T]) (*Node[T], error) {
-	carry, summedForwardList, err := sumForwardListsWithCarry(list1, list2)
+	var stack1 Stack[*Node[T]]
+	var stack2 Stack[*Node[T]]
+	err := _stackTwoForwardLists(list1, list2, &stack1, &stack2)
 	if err != nil {
 		return nil, err
 	}
-	if carry != 0 {
-		head := CreateNode(carry)
-		head.next = summedForwardList
-		return head, nil
+	// Add list elements to their respective stacks
+	// Add the elements at the top of the stack, with a potential carry
+	// If one stack no longer has elements, use the value of 0.
+	carry := T(0)
+	var head *Node[T]
+	var node *Node[T]
+
+	top1, ok1 := stack1.Pop()
+	top2, ok2 := stack2.Pop()
+	for top1 != nil || top2 != nil {
+		v1, v2 := T(0), T(0)
+		if ok1 {
+			v1 = top1.data
+			top1, ok1 = stack1.Pop()
+		}
+		if ok2 {
+			v2 = top2.data
+			top2, ok2 = stack2.Pop()
+		}
+		carry, node, _ = summedNodeWithCarry(v1, v2, carry)
+		if head == nil {
+			head = node
+		} else {
+			node.next = head
+			head = node
+		}
 	}
-	return summedForwardList, nil
+	if carry != 0 {
+		node := CreateNode(carry)
+		node.next = head
+		head = node
+	}
+	return head, nil
 }

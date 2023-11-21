@@ -265,6 +265,6 @@ func TestSumForwardListsOfDifferentLengths(t *testing.T) {
 	list2 := createList([]int32{9, 9, 4}) // 994
 
 	expectedList := createList([]int32{1, 0, 9, 1}) // 1091
-	actualList, _ := sumForwardListsInOnePass(list1, list2)
+	actualList, _ := sumUnevenForwardLists(list1, list2)
 	assert.Equal(t, expectedList.ToString(), actualList.ToString())
 }
