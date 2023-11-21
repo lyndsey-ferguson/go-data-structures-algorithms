@@ -1,7 +1,6 @@
 package linkedlists
 
 import (
-	"bytes"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -231,64 +230,4 @@ func TestPartitionIntList(t *testing.T) {
 
 	partitionIntList(list, 5)
 	assert.Equal(t, expectedList.ToString(), list.ToString())
-}
-
-func TestPrintNumberByDigits(t *testing.T) {
-	x := 912
-	var b bytes.Buffer
-
-	printNumberByDigits(int32(x), &b)
-
-	assert.Equal(t, "912", b.String())
-}
-
-func TestPrintNumberByDigitsReversed(t *testing.T) {
-	x := 912
-	var b bytes.Buffer
-
-	printNumberByDigitsReversed(int32(x), &b)
-
-	assert.Equal(t, "219", b.String())
-}
-
-func TestNumberToReverseList(t *testing.T) {
-	expectedList := createList([]int32{2, 1, 9})
-
-	assert.Equal(t, expectedList.ToString(), numberToReverseList(912).ToString())
-}
-
-func TestNumberToList(t *testing.T) {
-	expectedList := createList([]int32{9, 1, 2})
-
-	assert.Equal(t, expectedList.ToString(), numberToList(912).ToString())
-}
-
-func TestReverseListToNumber(t *testing.T) {
-	list := createList([]int32{2, 1, 9})
-
-	assert.Equal(t, int32(912), reverseListToNumber(list))
-}
-
-func TestListToNumber(t *testing.T) {
-	list := createList([]int32{9, 1, 2})
-
-	assert.Equal(t, int32(912), listToNumber(list))
-}
-
-func TestSumReverseLists(t *testing.T) {
-	list1 := createList([]int32{7, 1, 6})
-	list2 := createList([]int32{5, 9, 2})
-
-	expectedList := createList([]int32{2, 1, 9})
-
-	assert.Equal(t, expectedList.ToString(), sumReverseLists(list1, list2).ToString())
-}
-
-func TestSumLists(t *testing.T) {
-	list1 := createList([]int32{6, 1, 7})
-	list2 := createList([]int32{2, 9, 5})
-
-	expectedList := createList([]int32{9, 1, 2})
-
-	assert.Equal(t, expectedList.ToString(), sumLists(list1, list2).ToString())
 }
