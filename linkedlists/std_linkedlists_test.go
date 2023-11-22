@@ -223,11 +223,3 @@ func TestDeleteMiddleNode(t *testing.T) {
 	deleteMiddleNode(list.next)
 	assert.Equal(t, expectedList2.ToString(), list.ToString())
 }
-
-func TestPartitionIntList(t *testing.T) {
-	list := createList([]int32{3, 5, 8, 5, 10, 2, 1})
-	expectedList := createList([]int32{3, 2, 1, 5, 10, 5, 8})
-
-	partitionIntList(list, 5)
-	assert.Equal(t, expectedList.ToString(), list.ToString())
-}

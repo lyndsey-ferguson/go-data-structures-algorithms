@@ -284,29 +284,3 @@ func findNode[T comparable](list *Node[T], comparator nodeMatchComparator[T]) *N
 
 	return cursor
 }
-
-func partitionIntList[T int32](list *Node[T], partition T) {
-	if list == nil {
-		// there are no elements
-		return
-	}
-
-	findLowlyPlacedHighNodeComparator := func(node *Node[T]) bool {
-		return (node != nil && node.data >= partition)
-	}
-	findHighlyPlacedLowNodeComparator := func(node *Node[T]) bool {
-		return (node != nil && node.data < partition)
-	}
-	// Find the first value that is greater than, or equal
-	// to the partition value
-	low := findNode(list, findLowlyPlacedHighNodeComparator)
-
-	// Find the next value that is less than the partition value
-	// So we can swap
-	high := findNode(low.next, findHighlyPlacedLowNodeComparator)
-	for low != nil && high != nil {
-		low.data, high.data = high.data, low.data
-		low = findNode(low.next, findLowlyPlacedHighNodeComparator)
-		high = findNode(high.next, findHighlyPlacedLowNodeComparator)
-	}
-}
