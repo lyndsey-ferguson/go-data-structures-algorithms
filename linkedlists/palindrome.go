@@ -2,7 +2,7 @@ package linkedlists
 
 import "math"
 
-func isListPalindrome[T comparable](list *Node[T]) bool {
+func isListPalindromeUsingStack[T comparable](list *Node[T]) bool {
 	var stack Stack[*Node[T]]
 
 	nodeCount := 0
