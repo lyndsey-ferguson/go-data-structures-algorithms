@@ -6,20 +6,20 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestIsListPalindromeValidWithEvenPalindrome(t *testing.T) {
+func TestIsListPalindromeUsingStackValidWithEvenPalindrome(t *testing.T) {
 	list := createLetterList([]string{"a", "b", "b", "a"})
 
-	assert.True(t, isListPalindrome(list))
+	assert.True(t, isListPalindromeUsingStack(list))
 }
 
-func TestIsListPalindromeValidWithOddPalindrome(t *testing.T) {
+func TestIsListPalindromeUsingStackValidWithOddPalindrome(t *testing.T) {
 	list := createLetterList([]string{"a", "b", "c", "b", "a"})
 
-	assert.True(t, isListPalindrome(list))
+	assert.True(t, isListPalindromeUsingStack(list))
 }
 
-func TestIsListPalindromeInvalid(t *testing.T) {
+func TestIsListPalindromeUsingStackInvalid(t *testing.T) {
 	list := createLetterList([]string{"a", "b", "b", "c", "a"})
 
-	assert.False(t, isListPalindrome(list))
+	assert.False(t, isListPalindromeUsingStack(list))
 }
