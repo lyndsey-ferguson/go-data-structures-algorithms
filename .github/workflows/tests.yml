@@ -1,8 +1,8 @@
 name: Test Data Structures & Algorithms
-run-name: ${{ github.actor }} is testing linked lists 🚀
+run-name: ${{ github.actor }} Unit Testing 🚀
 on: [push]
 jobs:
-  Test-Linked-Lists:
+  Unit-Testing:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
