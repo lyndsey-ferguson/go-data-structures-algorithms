@@ -15,24 +15,6 @@ func ArrayToString(array []int) string {
 	return "[" + strings.Join(stringArray, " ") + "]"
 }
 
-func ArePermutations(s1 string, s2 string) bool {
-	if len(s1) != len(s2) {
-		return false
-	}
-	lettersCounter := make(map[byte]int)
-
-	for i := 0; i < len(s1); i++ {
-		lettersCounter[s1[i]]++
-	}
-	for i := 0; i < len(s2); i++ {
-		lettersCounter[s2[i]]--
-		if lettersCounter[s2[i]] < 0 {
-			return false
-		}
-	}
-	return true
-}
-
 func urlify(s []byte, trueLength int) {
 	j := len(s) - 1
 	i := trueLength - 1
