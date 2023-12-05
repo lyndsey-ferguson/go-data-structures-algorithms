@@ -15,47 +15,6 @@ func ArrayToString(array []int) string {
 	return "[" + strings.Join(stringArray, " ") + "]"
 }
 
-func Abs(v int) int {
-	if v < 0 {
-		return -v
-	}
-	return v
-}
-
-func areStringsLessThanTwoEditsApart(s1 []byte, s2 []byte) bool {
-	if Abs(len(s1)-len(s2)) > 1 {
-		return false
-	}
-	bigger, smaller := s1, s2
-	if len(smaller) > len(bigger) {
-		bigger, smaller = smaller, bigger
-	}
-	foundOffChar := false
-	j := 0
-	for i := 0; i < len(bigger) && j < len(smaller); i++ {
-		if bigger[i] == smaller[j] {
-			j++
-		} else {
-			if foundOffChar {
-				// we are in the state where we already found 1 letter that doesn't
-				// line up. Either the letter is the one that was added to bigger
-				// or removed from smaller.
-				return false
-			} else {
-				if len(bigger) == len(smaller) {
-					// we may have found the letter that was replaced in one of the
-					// strings. Let's update 'j' so that the next comparision
-					// will be lined up with the 'ith' character.
-					j++
-				}
-				foundOffChar = true
-			}
-		}
-	}
-
-	return true
-}
-
 func insertNumber(s []byte, number int, index *int) {
 	numStr := strconv.Itoa(number)
 	for k := 0; k < len(numStr); k++ {
