@@ -15,46 +15,6 @@ func ArrayToString(array []int) string {
 	return "[" + strings.Join(stringArray, " ") + "]"
 }
 
-func insertNumber(s []byte, number int, index *int) {
-	numStr := strconv.Itoa(number)
-	for k := 0; k < len(numStr); k++ {
-		s[*index] = numStr[k]
-		(*index)++
-	}
-}
-
-func getCompressedString(s []byte) []byte {
-	if len(s) < 3 {
-		return s
-	}
-	var lastChar byte
-	charCount := 0
-	compressed := make([]byte, len(s))
-	j := 0
-	for i := 0; i < len(s); i++ {
-		if s[i] != lastChar {
-			if charCount > 1 {
-				insertNumber(compressed, charCount, &j)
-			}
-			lastChar = s[i]
-			compressed[j] = lastChar
-			charCount = 1
-			j++
-		} else {
-			charCount++
-		}
-	}
-	if charCount > 1 {
-		insertNumber(compressed, charCount, &j)
-	} else {
-		compressed[j] = lastChar
-	}
-	if j < len(s) {
-		return compressed[:j]
-	}
-	return s
-}
-
 func isStringRotation(s1 []byte, s2 []byte) bool {
 	if len(s1) != len(s2) {
 		return false
