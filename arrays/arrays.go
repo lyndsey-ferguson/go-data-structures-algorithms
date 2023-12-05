@@ -15,21 +15,6 @@ func ArrayToString(array []int) string {
 	return "[" + strings.Join(stringArray, " ") + "]"
 }
 
-func urlify(s []byte, trueLength int) {
-	j := len(s) - 1
-	i := trueLength - 1
-	for ; i >= 0 && i < j; i-- {
-		if s[i] == ' ' {
-			s[j] = '0'
-			s[j-1] = '2'
-			s[j-2] = '%'
-			j -= 3
-		} else {
-			s[j], j = s[i], j-1
-		}
-	}
-}
-
 func isAlphaNumeric(b byte) bool {
 	if (b < 'a' || b > 'z') && (b < 'A' || b > 'Z') && (b < '0' || b > '9') {
 		return false
