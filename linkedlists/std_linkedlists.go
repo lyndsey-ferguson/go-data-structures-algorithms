@@ -120,48 +120,6 @@ func RemoveAllNodesWithValue[T comparable](list *Node[T], data T) *Node[T] {
 	return RemoveNodesWithValueUsingStrategy(list, data, RemoveAllStrategy)
 }
 
-func findKthLastNode[T comparable](list *Node[T], k int) *Node[T] {
-	if k < 0 {
-		return nil
-	}
-
-	var kth *Node[T]
-	for cursor := list; cursor != nil; cursor = cursor.next {
-		if k == 0 {
-			kth = list
-		} else if k < 0 && kth.next != nil {
-			kth = kth.next
-		}
-		k = k - 1
-	}
-	return kth
-}
-
-/*
-	There is also a recursive version of 'findKthLastNode'
-*/
-
-func findKthLastNodeRecursively[T comparable](list *Node[T], k int) *Node[T] {
-	localK := k
-	return _findKthLastNodeRecursively[T](list, &localK)
-}
-
-func _findKthLastNodeRecursively[T comparable](list *Node[T], k *int) *Node[T] {
-	if list == nil {
-		return nil
-	} else {
-		kth := _findKthLastNodeRecursively[T](list.next, k)
-		if kth != nil {
-			return kth
-		} else if *k == 0 {
-			return list
-		} else {
-			*k = *k - 1
-			return nil
-		}
-	}
-}
-
 func deleteMiddleNode[T comparable](middle *Node[T]) {
 	if middle == nil || middle.next == nil {
 		return
