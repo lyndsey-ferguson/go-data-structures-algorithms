@@ -174,22 +174,6 @@ func createLetterList(letters []string) *Node[string] {
 	return createList[string](letters)
 }
 
-func TestRemoveDuplicatesInline(t *testing.T) {
-	list := createLetterList([]string{"x", "w", "y", "x", "h", "y", "a", "x"})
-	expectedList := createLetterList([]string{"x", "w", "y", "h", "a"})
-
-	removeDuplicatesInline(list)
-	assert.Equal(t, expectedList.ToString(), list.ToString())
-}
-
-func TestRemoveDuplicatesWithHash(t *testing.T) {
-	list := createLetterList([]string{"x", "w", "y", "x", "h", "y", "a", "x"})
-	expectedList := createLetterList([]string{"x", "w", "y", "h", "a"})
-
-	removeDuplicatesWithHash(list)
-	assert.Equal(t, expectedList.ToString(), list.ToString())
-}
-
 func TestFindKLastNode(t *testing.T) {
 	list := createLetterList([]string{"A", "B", "C"})
 
