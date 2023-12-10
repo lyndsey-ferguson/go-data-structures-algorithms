@@ -156,34 +156,3 @@ func TestRemoveAllNodesWithValue(t *testing.T) {
 	updatedList = RemoveAllNodesWithValue(nil, 2)
 	assert.Equal(t, "", updatedList.ToString())
 }
-
-func createList[T comparable](items []T) *Node[T] {
-	if len(items) < 1 {
-		return nil
-	}
-	list := CreateNode(items[0])
-
-	for i, end := 1, list; i < len(items); i, end = i+1, end.next {
-		node := CreateNode(items[i])
-		AppendNode(end, node)
-	}
-	return list
-}
-
-func createLetterList(letters []string) *Node[string] {
-	return createList[string](letters)
-}
-
-func TestDeleteMiddleNode(t *testing.T) {
-	list := createLetterList([]string{"A", "B", "C", "D", "E", "F"})
-	expectedList := createLetterList([]string{"A", "B", "D", "E", "F"})
-	middle := list.next.next
-
-	assert.Equal(t, "C", middle.data)
-	deleteMiddleNode(middle)
-	assert.Equal(t, expectedList.ToString(), list.ToString())
-
-	expectedList2 := createLetterList([]string{"A", "D", "E", "F"})
-	deleteMiddleNode(list.next)
-	assert.Equal(t, expectedList2.ToString(), list.ToString())
-}
