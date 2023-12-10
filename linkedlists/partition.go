@@ -1,5 +1,40 @@
 package linkedlists
 
+/*
+Write code to partition a linked list around a value x,
+such that all nodes less than x come before all nodes greater than or equal to x.
+If x is contained within the list, the values of x only need to be after the elements
+less than x (see below).
+The partition element x can appear anywhere in the “right partition”: it does not
+need to appear between the left and right partitions.
+
+EXAMPLE:
+Input 3 -> 5 -> 8 -> 5 -> 10 -> 2 -> 1 (partition = 5)
+output: 3 -> 1 -> 2    ->    10 -> 5 -> 5 -> 8
+*/
+
+/*
+The first intuition is to create two partitions, one a "low number" partition,
+and a "equal/high number partition". Then iterate over the list, put the nodes
+with a low number into the low-number-partition, and the other nodes into the
+equal-high-number-partition.
+
+My question is, is there an undue amount of emphasis placed on the unimportance
+of the partitioned list not requiring any order, just be anywhere in the higher
+number partition?
+
+Maybe the idea is that I am to avoid making two partitions.
+
+Ok, maybe I can iterate the list with two pointers, one "low" and one high"
+Move the low pointer until it reaches a node with a value equal to or higher
+and then swap the two values. Then, find the next node that is equal to or
+higher, starting from the last found "low" pointer, and the
+next high (or equal) value starting from the "high" pointer.
+
+Swap swap swap
+
+*/
+
 func partitionIntList[T int32](list *Node[T], partition T) {
 	if list == nil {
 		// there are no elements
@@ -28,6 +63,9 @@ func partitionIntList[T int32](list *Node[T], partition T) {
 	}
 }
 
+/*
+Just for fun, let's create the two lists, and then merge them
+*/
 func partitionIntListMerging[T int32](list **Node[T], parition T) {
 	if list == nil || *list == nil {
 		return
