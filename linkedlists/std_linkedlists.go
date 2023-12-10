@@ -120,14 +120,6 @@ func RemoveAllNodesWithValue[T comparable](list *Node[T], data T) *Node[T] {
 	return RemoveNodesWithValueUsingStrategy(list, data, RemoveAllStrategy)
 }
 
-func deleteMiddleNode[T comparable](middle *Node[T]) {
-	if middle == nil || middle.next == nil {
-		return
-	}
-	middle.data = middle.next.data
-	middle.next = middle.next.next
-}
-
 type nodeMatchComparator[T comparable] func(*Node[T]) bool
 
 func findNode[T comparable](list *Node[T], comparator nodeMatchComparator[T]) *Node[T] {
@@ -137,4 +129,21 @@ func findNode[T comparable](list *Node[T], comparator nodeMatchComparator[T]) *N
 	}
 
 	return cursor
+}
+
+func createList[T comparable](items []T) *Node[T] {
+	if len(items) < 1 {
+		return nil
+	}
+	list := CreateNode(items[0])
+
+	for i, end := 1, list; i < len(items); i, end = i+1, end.next {
+		node := CreateNode(items[i])
+		AppendNode(end, node)
+	}
+	return list
+}
+
+func createLetterList(letters []string) *Node[string] {
+	return createList[string](letters)
 }
