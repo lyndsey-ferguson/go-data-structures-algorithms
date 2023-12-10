@@ -1,5 +1,28 @@
 package linkedlists
 
+/*
+Given two (singly) linked lists, determine if the two lists intersect.
+Return the intersection node.
+Note that the intersection is defined based on reference, not value.
+That is if the kth element of the first linked list is the exact same node
+(by references) as the jth node of the second linked list, then they are intersecting.
+
+
+For example:
+
+b -> c -> d -> e
+     ^
+	 |
+	 o
+	 ^
+	 |
+	 d
+
+The intersection is 'c'
+
+I could use a hashmap of pointers to find the node that appears twice.
+*/
+
 func intersectionNodeForListsUsingMap[T comparable](list1 *Node[T], list2 *Node[T]) *Node[T] {
 	foundNodes := make(map[*Node[T]]bool)
 
@@ -18,6 +41,16 @@ func intersectionNodeForListsUsingMap[T comparable](list1 *Node[T], list2 *Node[
 	return nil
 }
 
+/*
+However, there is something unique about this case: both lists
+have the same final, tail, node. If they don't have the same
+tail, then we know these lists do not intersect.
+
+Could I get the length of both lists, and then, starting at
+the same number of nodes away from the end of the longest
+list, and then step forward until we find the intersection
+node.
+*/
 func getIthNode[T comparable](list *Node[T], i int) *Node[T] {
 	start := list
 	for count := 0; count < i && start != nil; count += 1 {
