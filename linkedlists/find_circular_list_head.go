@@ -1,5 +1,42 @@
 package linkedlists
 
+/*
+Given a circular linked list, implement an algorithm that returns the node at the beginning of the loop.
+
+Definition:
+Circular linked list: A (corrupt) linked list in which a node’s next pointer points to an earlier node, so as to make a loop in the linked list.
+
+Example:
+Input: A -> B -> C -> D -> E -> C (the same C as earlier)
+Output: C
+
+# Linked List Loop Detection
+
+![[Pasted image 20231128212148.png]]
+
+With regards to the problem where one has to find a cycle in a linked list, the thought is that your fast runner is already "k" nodes inside the loop when the slow runner first enters the loop. The fast runner is also "k" nodes ahead of the slow runner because of its speed: it moves 2 nodes each step for the 1 node that the slow runner moves.
+
+![[Pasted image 20231128212317.png]]
+
+As the fast runner is moving twice as fast as the slow runner, it will eventually catch up to the slow runner, and that happens to be k nodes from the beginning of the loop.
+
+So I it does end up that the slow and fast runners collide K nodes away from the entrance to the
+Loop. The idea is that the fast runner will reach the slow runner in the number of steps equaling the  loop size minus the number of modes from the head to the loop entrance because the fast runner is already k nodes in the loop. Then, that means that the runners will meet k nodes away from the loop entrance within the loop.
+
+![[Pasted image 20231128213155.png]]
+
+Once we have the collision point, so we reset the slow pointer at the head and move both runners at the slow runner rate. When the runners collide again, we have the loop entrance.
+
+![[Pasted image 20231128215200.png]]
+
+
+![[Pasted image 20231128220215.png]]
+
+#LinkedLists
+#DataStructuresAndAlgorithms
+
+*/
+
 func findCircularListHeadWithHash[T comparable](list *Node[T]) *Node[T] {
 	visitedNodes := make(map[*Node[T]]bool)
 
