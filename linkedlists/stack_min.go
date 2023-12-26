@@ -77,3 +77,41 @@ func (s *MinStack[T]) Min() (T, bool) {
 func (s *MinStack[T]) IsEmpty() bool {
 	return s.top == nil
 }
+
+type MinStack2[T cmp.Ordered] struct {
+	top Stack[T]
+	min Stack[T]
+}
+
+func (s *MinStack2[T]) Push(i T) {
+	s.top.Push(i)
+	v, ok := s.min.Peek()
+	if !ok || i <= v {
+		s.min.Push(i)
+	}
+}
+
+func (s *MinStack2[T]) Pop() (T, bool) {
+	e, ok := s.top.Pop()
+	if ok {
+		v, ok := s.min.Peek()
+		if ok && v == e {
+			s.min.Pop()
+		}
+		return e, ok
+	}
+	var nonExistant T
+	return nonExistant, false
+}
+
+func (s *MinStack2[T]) Peek() (T, bool) {
+	return s.top.Peek()
+}
+
+func (s *MinStack2[T]) Min() (T, bool) {
+	return s.min.Peek()
+}
+
+func (s *MinStack2[T]) IsEmpty() bool {
+	return s.top.IsEmpty()
+}
