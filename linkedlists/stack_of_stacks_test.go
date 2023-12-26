@@ -79,3 +79,23 @@ func TestStackOfStacksIsEmpty(t *testing.T) {
 	}
 	assert.True(t, ss.IsEmpty())
 }
+
+func TestStackOfStacksPopAt(t *testing.T) {
+	ss := StackOfStacks[int]{
+		capacity: 3,
+	}
+	ss.Push(1)
+	ss.Push(2)
+	ss.Push(3)
+	ss.Push(4)
+	ss.Push(5)
+
+	for i := 3; i > 0; i-- {
+		v, ok := ss.PopAt(0)
+		assert.True(t, ok)
+		assert.Equal(t, i, v)
+	}
+	v, ok := ss.PopAt(0)
+	assert.True(t, ok)
+	assert.Equal(t, 5, v)
+}
