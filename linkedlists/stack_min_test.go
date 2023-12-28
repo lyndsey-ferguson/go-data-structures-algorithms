@@ -297,8 +297,7 @@ func TestMinStack2MinWithManyElementsAfterPops(t *testing.T) {
 	s.Push(8)
 
 	for i := 0; i < 5; i++ {
-		v, _ := s.Pop()
-		t.Logf("Popping %d", v)
+		s.Pop()
 	}
 	v, ok := s.Min()
 	assert.True(t, ok)
