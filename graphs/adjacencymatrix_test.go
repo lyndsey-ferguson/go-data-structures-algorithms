@@ -1,4 +1,4 @@
-package adjacencymatrix
+package graphs
 
 import (
 	"testing"
@@ -7,7 +7,7 @@ import (
 )
 
 func TestBfsStartingAtVertix2(t *testing.T) {
-	g := CreateGraph(4)
+	g := CreateMatrixGraph(4)
 
 	g.AddEdge(0, 1)
 	g.AddEdge(0, 2)
@@ -21,7 +21,7 @@ func TestBfsStartingAtVertix2(t *testing.T) {
 }
 
 func TestDfsStartingAtVertix0(t *testing.T) {
-	g := CreateGraph(5)
+	g := CreateMatrixGraph(5)
 
 	g.AddEdge(0, 1)
 	g.AddEdge(0, 2)
@@ -39,7 +39,7 @@ func TestDfsStartingAtVertix0(t *testing.T) {
 }
 
 func TestDfsStartingAtVertix2(t *testing.T) {
-	g := CreateGraph(4)
+	g := CreateMatrixGraph(4)
 
 	g.AddEdge(0, 1)
 	g.AddEdge(0, 2)
