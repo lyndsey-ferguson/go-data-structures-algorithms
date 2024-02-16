@@ -1,4 +1,4 @@
-package adjacencymatrix
+package graphs
 
 import (
 	"strconv"
@@ -10,17 +10,17 @@ const (
 	MaxVertices = 50
 )
 
-type Graph struct {
+type MatrixGraph struct {
 	v   int      // number of vertices
 	adj [][]bool // adjacency list
 }
 
-func CreateGraph(v int) *Graph {
+func CreateMatrixGraph(v int) *MatrixGraph {
 	adj := make([][]bool, v)
 	for i := 0; i < v; i++ {
 		adj[i] = make([]bool, v)
 	}
-	g := &Graph{
+	g := &MatrixGraph{
 		v:   v,
 		adj: adj,
 	}
@@ -28,11 +28,11 @@ func CreateGraph(v int) *Graph {
 	return g
 }
 
-func (g *Graph) AddEdge(v int, w int) {
+func (g *MatrixGraph) AddEdge(v int, w int) {
 	g.adj[v][w] = true
 }
 
-func (g *Graph) Bfs(s int) string {
+func (g *MatrixGraph) Bfs(s int) string {
 	result := ""
 	visited := make([]bool, MaxVertices)
 	queue := make([]int, MaxVertices)
@@ -60,7 +60,7 @@ func (g *Graph) Bfs(s int) string {
 	return result
 }
 
-func (g *Graph) dfs(s int, visited []bool) string {
+func (g *MatrixGraph) dfs(s int, visited []bool) string {
 	var stack linkedlists.Stack[int]
 	var result string
 
@@ -86,7 +86,7 @@ func (g *Graph) dfs(s int, visited []bool) string {
 	}
 	return result
 }
-func (g *Graph) Dfs(s int) string {
+func (g *MatrixGraph) Dfs(s int) string {
 	visited := make([]bool, MaxVertices)
 	return g.dfs(s, visited)
 }
