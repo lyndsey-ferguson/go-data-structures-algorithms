@@ -2,6 +2,11 @@ package trees
 
 import "math"
 
+/*
+Given a sorted (increasing order) array with unique integer elements
+write an algorithm to create a binary search tree with minimal height.
+*/
+
 func TreeifySortedArray[T comparable](a []T, start int, end int) *Node[T] {
 	var root *Node[T]
 
