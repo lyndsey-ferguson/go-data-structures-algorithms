@@ -33,5 +33,10 @@ func NextInOrderTraversal[T comparable](node *ParentedNode[T]) *ParentedNode[T] 
 	if node.right != nil {
 		return node.right
 	}
-	return node.parent.parent
+	for candidate := node.parent; candidate != nil; candidate = candidate.parent {
+		if candidate.parent != nil && candidate.parent.left == candidate {
+			return candidate.parent
+		}
+	}
+	return nil
 }

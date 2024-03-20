@@ -6,7 +6,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestNextInOrderTraversal(t *testing.T) {
+func TestNextInOrderTraversalSimpleCase(t *testing.T) {
 	root := CreateParentedNode(1)
 	left := CreateParentedNode(0)
 	left.parent = root
@@ -20,4 +20,23 @@ func TestNextInOrderTraversal(t *testing.T) {
 
 	var unparentedNode *ParentedNode[int]
 	assert.Equal(t, unparentedNode, NextInOrderTraversal(right))
+}
+
+func TestNextInOrderTraversalBiggerTree(t *testing.T) {
+	gNode := CreateParentedNode('g')
+	cNode := CreateParentedNode('C')
+	tree := CreateParentedNode('D',
+		CreateParentedNode('B',
+			CreateParentedNode('A'),
+			cNode,
+		),
+		CreateParentedNode('F',
+			CreateParentedNode('E'),
+			gNode,
+		),
+	)
+	var unparentedNode *ParentedNode[rune]
+	assert.Equal(t, unparentedNode, NextInOrderTraversal(gNode))
+
+	assert.Equal(t, tree, NextInOrderTraversal(cNode))
 }
