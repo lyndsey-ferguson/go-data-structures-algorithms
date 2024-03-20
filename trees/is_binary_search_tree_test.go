@@ -51,3 +51,14 @@ func TestIsBinarySearchTreeForBst(t *testing.T) {
 	)
 	assert.True(t, IsBinarySearchTree(tree))
 }
+
+func TestIsBinarySearchTreeForFakeBst(t *testing.T) {
+	tree := CreateNode(20,
+		CreateNode(10,
+			nil,
+			CreateNode(25),
+		),
+		CreateNode(30),
+	)
+	assert.False(t, IsBinarySearchTree(tree))
+}
