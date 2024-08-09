@@ -1,7 +1,6 @@
 package general
 
 import (
-	"fmt"
 	"slices"
 
 	"github.com/golang-collections/collections/stack"
@@ -57,7 +56,6 @@ func calculateEffectiveness(bills []Bill, notices []Notice, payments []Payment) 
 	textScore := 0
 	paperMailScore := 0
 
-	fmt.Printf("bills: %v, notices: %v, payments: %v\n\n", bills, notices, payments)
 	events := make([]Event, len(bills)+len(notices)+len(payments))
 	eventIndex := 0
 	for _, b := range bills {
@@ -72,7 +70,6 @@ func calculateEffectiveness(bills []Bill, notices []Notice, payments []Payment) 
 		events[eventIndex] = p
 		eventIndex += 1
 	}
-	fmt.Printf("events: %v\n\n", events)
 	slices.SortFunc(events, func(a, b Event) int {
 		getEventTimestamp := func(event Event) int {
 			switch e := event.(type) {
@@ -89,27 +86,16 @@ func calculateEffectiveness(bills []Bill, notices []Notice, payments []Payment) 
 		timestampB := getEventTimestamp(b)
 		return timestampA - timestampB
 	})
-	fmt.Printf("events: %v\n", events)
 
 	patientBillPaymentStackMap := make(map[string]*stack.Stack)
 	for _, _e := range events {
 		patientId := ""
 		switch e := _e.(type) {
 		case Notice:
-			notice_type_str := "email"
-			switch e.channel {
-			case 1:
-				notice_type_str = "text"
-			case 2:
-				notice_type_str = "paper mail"
-			}
-			fmt.Printf("processing notice of type %v\n", notice_type_str)
 			patientId = e.patientId
 		case Bill:
-			fmt.Printf("processing bill of %v\n", e.amount)
 			patientId = e.patientId
 		case Payment:
-			fmt.Printf("processing payment of %v\n", e.amount)
 			patientId = e.patientId
 		}
 
