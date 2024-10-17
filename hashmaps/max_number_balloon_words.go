@@ -1,4 +1,4 @@
-package hashes
+package hashmaps
 
 import (
 	"math"
